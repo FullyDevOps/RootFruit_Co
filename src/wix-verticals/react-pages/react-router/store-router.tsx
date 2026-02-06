@@ -22,22 +22,6 @@ import {
 } from './routes/store-collection';
 import { defaultStoreCollectionRouteRedirectLoader } from './routes/store-redirect';
 
-// ✅ Import your site header/footer (same theme)
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-
-const ProductPageLayout = () => {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-1">
-        <ProductDetailsRoute />
-      </main>
-      <Footer />
-    </div>
-  );
-};
-
 export const routes = [
   {
     path: '/',
@@ -57,8 +41,7 @@ export const routes = [
     children: [
       {
         path: '/products/:slug',
-        // ✅ Product page ONLY gets Header/Footer
-        element: <ProductPageLayout />,
+        element: <ProductDetailsRoute />,
         loader: productRouteLoader,
         routeMetadata: {
           appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
