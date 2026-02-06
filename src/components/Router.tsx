@@ -1,30 +1,30 @@
 import { MemberProvider } from '@/integrations';
-import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
-import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import { ScrollToTop } from '@/lib/scroll-to-top';
 import type { ReactNode } from 'react';
+import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
 
 // Import Wix Stores routes and loaders
-import { rootRouteLoader, WixServicesProvider } from '@/wix-verticals/react-pages/react-router/routes/root';
+import { Cart } from '@/wix-verticals/react-pages/react-router/routes/cart';
 import { ProductDetailsRoute, productRouteLoader } from '@/wix-verticals/react-pages/react-router/routes/product-details';
+import { rootRouteLoader, WixServicesProvider } from '@/wix-verticals/react-pages/react-router/routes/root';
 import { StoreCollectionRoute, storeCollectionRouteLoader } from '@/wix-verticals/react-pages/react-router/routes/store-collection';
 import { defaultStoreCollectionRouteRedirectLoader } from '@/wix-verticals/react-pages/react-router/routes/store-redirect';
-import { Cart } from '@/wix-verticals/react-pages/react-router/routes/cart';
 
 // Import pages
-import HomePage from '@/components/pages/HomePage';
-import RecipesPage from '@/components/pages/RecipesPage';
-import RecipeDetailPage from '@/components/pages/RecipeDetailPage';
-import QualityPage from '@/components/pages/QualityPage';
-import CertificationsPage from '@/components/pages/CertificationsPage';
 import AboutPage from '@/components/pages/AboutPage';
+import CertificationsPage from '@/components/pages/CertificationsPage';
 import ContactPage from '@/components/pages/ContactPage';
 import FAQsPage from '@/components/pages/FAQsPage';
+import HomePage from '@/components/pages/HomePage';
 import PoliciesPage from '@/components/pages/PoliciesPage';
+import QualityPage from '@/components/pages/QualityPage';
+import RecipeDetailPage from '@/components/pages/RecipeDetailPage';
+import RecipesPage from '@/components/pages/RecipesPage';
 
 // Import layout components
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 // Root layout: keeps WixServicesProvider + ScrollToTop for all routes
 function MainLayout() {
