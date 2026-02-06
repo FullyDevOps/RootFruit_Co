@@ -2,15 +2,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowRight, 
-  Leaf, 
-  Award, 
-  ShieldCheck, 
-  Sun, 
-  Droplets, 
-  Heart, 
-  Check, 
+import {
+  ArrowRight,
+  Leaf,
+  Award,
+  ShieldCheck,
+  Sun,
+  Droplets,
+  Heart,
+  Check,
   Star,
   ShoppingBag,
   ArrowDown
@@ -25,7 +25,7 @@ import Footer from '@/components/Footer';
 const PRODUCTS = [
   {
     id: 'p1',
-    name: 'Organic Beetroot Powder',
+    name: 'Beetroot Powder',
     description: 'Nitric oxide boost for stamina and blood flow.',
     price: '$24.99',
     amazonLink: 'https://amazon.com',
@@ -33,7 +33,7 @@ const PRODUCTS = [
   },
   {
     id: 'p2',
-    name: 'Pure Spinach Powder',
+    name: 'Spinach Powder',
     description: 'Nutrient-dense greens for daily vitality.',
     price: '$22.50',
     amazonLink: 'https://amazon.com',
@@ -41,7 +41,7 @@ const PRODUCTS = [
   },
   {
     id: 'p3',
-    name: 'Golden Turmeric & Ginger',
+    name: 'Turmeric & Ginger',
     description: 'Anti-inflammatory blend for joint health.',
     price: '$26.00',
     amazonLink: 'https://amazon.com',
@@ -49,7 +49,7 @@ const PRODUCTS = [
   },
   {
     id: 'p4',
-    name: 'Wild Blueberry Powder',
+    name: 'Blueberry Powder',
     description: 'Antioxidant powerhouse for brain health.',
     price: '$29.99',
     amazonLink: 'https://amazon.com',
@@ -106,7 +106,7 @@ const RECIPES = [
 
 const SectionHeader = ({ title, subtitle, align = 'center', light = false }: { title: string, subtitle?: string, align?: 'left' | 'center' | 'right', light?: boolean }) => (
   <div className={`mb-16 ${align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left'}`}>
-    <motion.h2 
+    <motion.h2
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -116,7 +116,7 @@ const SectionHeader = ({ title, subtitle, align = 'center', light = false }: { t
       {title}
     </motion.h2>
     {subtitle && (
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -135,7 +135,7 @@ const ParallaxImage = ({ src, alt, className, speed = 0.5 }: { src: string, alt:
     target: ref,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
@@ -174,7 +174,7 @@ export default function HomePage() {
       <section className="relative w-full h-[95vh] flex items-center justify-center overflow-hidden">
         {/* Background Parallax */}
         <div className="absolute inset-0 z-0">
-          <ParallaxImage 
+          <ParallaxImage
             src="https://static.wixstatic.com/media/59e798_895c9d3d4c374212ac45ce508d2e4123~mv2.png?originWidth=1600&originHeight=896"
             alt="Artistic arrangement of fruit powders"
             className="w-full h-full"
@@ -298,7 +298,7 @@ export default function HomePage() {
           <div className="relative h-[600px] lg:h-[800px] w-full">
             <div className="absolute inset-0 bg-secondary/10 rounded-t-[10rem] rounded-b-none transform rotate-3 scale-95 z-0" />
             <div className="absolute inset-0 rounded-t-[10rem] overflow-hidden z-10">
-              <ParallaxImage 
+              <ParallaxImage
                 src="https://static.wixstatic.com/media/59e798_33f3630d50a644fab179e25a7925995a~mv2.png?originWidth=1152&originHeight=768"
                 alt="Close up of powder texture"
                 className="w-full h-full"
@@ -347,7 +347,7 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-                
+
                 <h3 className="font-heading text-2xl text-primary-foreground mb-2 group-hover:text-secondary transition-colors">
                   {product.name}
                 </h3>
@@ -356,7 +356,7 @@ export default function HomePage() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="font-paragraph text-lg text-primary-foreground">{product.price}</span>
-                  <a 
+                  <a
                     href={product.amazonLink}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -367,7 +367,7 @@ export default function HomePage() {
                 </div>
               </motion.div>
             ))}
-            
+
             {/* "View All" Card */}
             <div className="w-[200px] flex items-center justify-center">
               <Link to="/products" className="group flex flex-col items-center gap-4 text-primary-foreground/50 hover:text-secondary transition-colors">
@@ -384,8 +384,8 @@ export default function HomePage() {
       {/* --- QUALITY PROCESS (Vertical Sticky) --- */}
       <section className="py-32 bg-background">
         <div className="container mx-auto px-6 md:px-12">
-          <SectionHeader 
-            title="From Soil to Spoon" 
+          <SectionHeader
+            title="From Soil to Spoon"
             subtitle="Our commitment to quality is not just a promise; it's a rigorous, transparent process."
           />
 
@@ -429,10 +429,10 @@ export default function HomePage() {
                   </p>
                 </motion.div>
               ))}
-              
+
               <div className="pt-12">
-                <Link 
-                  to="/quality" 
+                <Link
+                  to="/quality"
                   className="inline-flex items-center gap-3 text-lg font-paragraph text-emerald-accent hover:text-emerald-accent/80 transition-colors border-b border-emerald-accent/30 pb-1"
                 >
                   Learn more about our certifications <ArrowRight className="w-5 h-5" />
@@ -460,7 +460,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Featured Large Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -521,7 +521,7 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="mt-12 text-center md:hidden">
             <Link to="/recipes" className="inline-flex px-8 py-4 border border-foreground/20 rounded-full hover:bg-foreground hover:text-background transition-all">
               View All Recipes
@@ -574,20 +574,20 @@ export default function HomePage() {
               Receive exclusive wellness tips, seasonal recipes, and early access to new harvests.
             </p>
 
-            <form 
+            <form
               className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
               onSubmit={(e) => {
                 e.preventDefault();
                 alert("Thank you for subscribing!");
               }}
             >
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 required
                 className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-secondary backdrop-blur-sm"
               />
-              <button 
+              <button
                 type="submit"
                 className="px-8 py-4 bg-secondary text-foreground font-bold rounded-full hover:bg-white transition-colors shadow-lg"
               >
