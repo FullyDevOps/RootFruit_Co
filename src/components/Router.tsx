@@ -1,32 +1,32 @@
 import { MemberProvider } from '@/integrations';
-import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
+import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
 import type { ReactNode } from 'react';
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
 
-// Import Wix Stores routes and loaders
-import { Cart } from '@/wix-verticals/react-pages/react-router/routes/cart';
-import { ProductDetailsRoute, productRouteLoader } from '@/wix-verticals/react-pages/react-router/routes/product-details';
+// Wix Stores routes and loaders
 import { rootRouteLoader, WixServicesProvider } from '@/wix-verticals/react-pages/react-router/routes/root';
+import { ProductDetailsRoute, productRouteLoader } from '@/wix-verticals/react-pages/react-router/routes/product-details';
 import { StoreCollectionRoute, storeCollectionRouteLoader } from '@/wix-verticals/react-pages/react-router/routes/store-collection';
 import { defaultStoreCollectionRouteRedirectLoader } from '@/wix-verticals/react-pages/react-router/routes/store-redirect';
+import { Cart } from '@/wix-verticals/react-pages/react-router/routes/cart';
 
-// Import pages
-import AboutPage from '@/components/pages/AboutPage';
+// Pages
+import HomePage from '@/components/pages/HomePage';
+import RecipesPage from '@/components/pages/RecipesPage';
+import RecipeDetailPage from '@/components/pages/RecipeDetailPage';
+import QualityPage from '@/components/pages/QualityPage';
 import CertificationsPage from '@/components/pages/CertificationsPage';
+import AboutPage from '@/components/pages/AboutPage';
 import ContactPage from '@/components/pages/ContactPage';
 import FAQsPage from '@/components/pages/FAQsPage';
-import HomePage from '@/components/pages/HomePage';
 import PoliciesPage from '@/components/pages/PoliciesPage';
-import QualityPage from '@/components/pages/QualityPage';
-import RecipeDetailPage from '@/components/pages/RecipeDetailPage';
-import RecipesPage from '@/components/pages/RecipesPage';
 
-// Import layout components
-import Footer from '@/components/Footer';
+// Site layout components
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-// Root layout: keeps WixServicesProvider + ScrollToTop for all routes
+// Root layout: provides Wix services + scroll behavior for all routes
 function MainLayout() {
   return (
     <WixServicesProvider>
@@ -36,112 +36,122 @@ function MainLayout() {
   );
 }
 
-// Product-only layout: wraps ONLY the product details route with Header/Footer
-function ProductLayout({ children }: { children: ReactNode }) {
+// ✅ Shell used ONLY for store pages that currently miss header/footer
+function StoreShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );
 }
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    loader: rootRouteLoader,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-        routeMetadata: {
-          pageIdentifier: 'home',
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <MainLayout />,
+      errorElement: <ErrorPage />,
+      loader: rootRouteLoader,
+      children: [
+        // Home and content pages (these pages already render Header/Footer internally)
+        {
+          index: true,
+          element: <HomePage />,
+          routeMetadata: { pageIdentifier: 'home' },
         },
-      },
-      {
-        path: '/store',
-        element: <StoreCollectionRoute productPageRoute="/products" />,
-        loader: defaultStoreCollectionRouteRedirectLoader,
-        index: true,
-      },
-      {
-        path: '/store/:categorySlug',
-        element: <StoreCollectionRoute productPageRoute="/products" />,
-        loader: storeCollectionRouteLoader,
-        routeMetadata: {
-          appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
-          pageIdentifier: "wix.stores.sub_pages.category",
-          identifiers: {
-            categorySlug: "STORES.CATEGORY.SLUG"
-          }
-        }
-      },
-      {
-        path: '/products/:slug',
-        element: (
-          <ProductLayout>
-            <ProductDetailsRoute />
-          </ProductLayout>
-        ),
-        loader: productRouteLoader,
-        routeMetadata: {
-          appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
-          pageIdentifier: "wix.stores.sub_pages.product",
-          identifiers: {
-            slug: "STORES.PRODUCT.SLUG"
-          }
+        {
+          path: '/recipes',
+          element: <RecipesPage />,
         },
-      },
-      {
-        path: '/cart',
-        element: <Cart />,
-      },
-      {
-        path: '/recipes',
-        element: <RecipesPage />,
-      },
-      {
-        path: '/recipes/:id',
-        element: <RecipeDetailPage />,
-      },
-      {
-        path: '/quality',
-        element: <QualityPage />,
-      },
-      {
-        path: '/certifications',
-        element: <CertificationsPage />,
-      },
-      {
-        path: '/about',
-        element: <AboutPage />,
-      },
-      {
-        path: '/contact',
-        element: <ContactPage />,
-      },
-      {
-        path: '/faqs',
-        element: <FAQsPage />,
-      },
-      {
-        path: '/policies',
-        element: <PoliciesPage />,
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
-    ],
-  },
-], {
-  basename: import.meta.env.BASE_NAME,
-});
+        {
+          path: '/recipes/:id',
+          element: <RecipeDetailPage />,
+        },
+        {
+          path: '/quality',
+          element: <QualityPage />,
+        },
+        {
+          path: '/certifications',
+          element: <CertificationsPage />,
+        },
+        {
+          path: '/about',
+          element: <AboutPage />,
+        },
+        {
+          path: '/contact',
+          element: <ContactPage />,
+        },
+        {
+          path: '/faqs',
+          element: <FAQsPage />,
+        },
+        {
+          path: '/policies',
+          element: <PoliciesPage />,
+        },
+
+        // ✅ Store pages (add Header/Footer here)
+        {
+          path: '/store',
+          element: (
+            <StoreShell>
+              <StoreCollectionRoute productPageRoute="/products" />
+            </StoreShell>
+          ),
+          loader: defaultStoreCollectionRouteRedirectLoader,
+          index: true,
+        },
+        {
+          path: '/store/:categorySlug',
+          element: (
+            <StoreShell>
+              <StoreCollectionRoute productPageRoute="/products" />
+            </StoreShell>
+          ),
+          loader: storeCollectionRouteLoader,
+          routeMetadata: {
+            appDefId: '1380b703-ce81-ff05-f115-39571d94dfcd',
+            pageIdentifier: 'wix.stores.sub_pages.category',
+            identifiers: { categorySlug: 'STORES.CATEGORY.SLUG' },
+          },
+        },
+        {
+          path: '/products/:slug',
+          element: (
+            <StoreShell>
+              <ProductDetailsRoute />
+            </StoreShell>
+          ),
+          loader: productRouteLoader,
+          routeMetadata: {
+            appDefId: '1380b703-ce81-ff05-f115-39571d94dfcd',
+            pageIdentifier: 'wix.stores.sub_pages.product',
+            identifiers: { slug: 'STORES.PRODUCT.SLUG' },
+          },
+        },
+        {
+          path: '/cart',
+          element: (
+            <StoreShell>
+              <Cart />
+            </StoreShell>
+          ),
+        },
+
+        // fallback
+        {
+          path: '*',
+          element: <Navigate to="/" replace />,
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_NAME }
+);
 
 export default function AppRouter() {
   return (
