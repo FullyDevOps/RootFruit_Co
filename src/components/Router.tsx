@@ -25,8 +25,18 @@ import PoliciesPage from '@/components/pages/PoliciesPage';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-// Layout with Header and Footer
-function Layout() {
+// Main layout with WixServicesProvider (no header/footer - only for product page)
+function MainLayout() {
+  return (
+    <WixServicesProvider>
+      <ScrollToTop />
+      <Outlet />
+    </WixServicesProvider>
+  );
+}
+
+// Layout with Header and Footer (only for product page)
+function ProductLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -35,16 +45,6 @@ function Layout() {
       </main>
       <Footer />
     </div>
-  );
-}
-
-// Main layout with WixServicesProvider
-function MainLayout() {
-  return (
-    <WixServicesProvider>
-      <ScrollToTop />
-      <Layout />
-    </WixServicesProvider>
   );
 }
 
@@ -82,7 +82,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/products/:slug',
-        element: <ProductDetailsRoute />,
+        element: (
+          <ProductLayout>
+            <ProductDetailsRoute />
+          </ProductLayout>
+        ),
         loader: productRouteLoader,
         routeMetadata: {
           appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
