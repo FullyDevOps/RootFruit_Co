@@ -2,6 +2,7 @@ import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import type { ReactNode } from 'react';
 
 // Import Wix Stores routes and loaders
 import { rootRouteLoader, WixServicesProvider } from '@/wix-verticals/react-pages/react-router/routes/root';
@@ -25,7 +26,7 @@ import PoliciesPage from '@/components/pages/PoliciesPage';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-// Main layout with WixServicesProvider (no header/footer - only for product page)
+// Root layout: keeps WixServicesProvider + ScrollToTop for all routes
 function MainLayout() {
   return (
     <WixServicesProvider>
@@ -35,13 +36,13 @@ function MainLayout() {
   );
 }
 
-// Layout with Header and Footer (only for product page)
-function ProductLayout() {
+// Product-only layout: wraps ONLY the product details route with Header/Footer
+function ProductLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1">
-        <Outlet />
+        {children}
       </main>
       <Footer />
     </div>
