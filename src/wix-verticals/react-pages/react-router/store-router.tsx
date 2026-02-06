@@ -1,26 +1,42 @@
+import { useMemo } from 'react';
 import {
+  createBrowserRouter,
+  createStaticRouter,
   Navigate,
   Outlet,
-  createBrowserRouter,
   RouterProvider,
-  type StaticHandlerContext,
-  createStaticRouter,
   StaticRouterProvider,
+  type StaticHandlerContext,
 } from 'react-router';
-import { useMemo } from 'react';
 
 // Import route components and loaders
-import { MiniCart, rootRouteLoader, WixServicesProvider } from './routes/root';
+import { Cart } from './routes/cart';
 import {
   ProductDetailsRoute,
   productRouteLoader,
 } from './routes/product-details';
+import { MiniCart, rootRouteLoader, WixServicesProvider } from './routes/root';
 import {
   StoreCollectionRoute,
   storeCollectionRouteLoader,
 } from './routes/store-collection';
 import { defaultStoreCollectionRouteRedirectLoader } from './routes/store-redirect';
-import { Cart } from './routes/cart';
+
+// ✅ Import your site header/footer (same theme)
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+
+const ProductPageLayout = () => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1">
+        <ProductDetailsRoute />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export const routes = [
   {
@@ -41,7 +57,8 @@ export const routes = [
     children: [
       {
         path: '/products/:slug',
-        element: <ProductDetailsRoute />,
+        // ✅ Product page ONLY gets Header/Footer
+        element: <ProductPageLayout />,
         loader: productRouteLoader,
         routeMetadata: {
           appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
